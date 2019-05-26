@@ -19,6 +19,9 @@
 
 .text{
     margin-bottom: 200px;
+    text-align: center;
+    font-size: 20px;
+    
 }
 
 #image-holder {
