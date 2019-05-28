@@ -1,11 +1,37 @@
 $("#start").click(startSlideshow);
 
-var correctAnswers = 0;
-var incorrectAnswers = 0;
-var unanswered = 0;
 var index = 0;
 var showImage;
 var count = 0;
+var score = 0;
+var wrong = 0;
+var unanswered = 0;
+var clockRunning = false;
+var time = 0;
+var lap = 1;
+
+//Starts countdown
+function startTimer() {
+    time = 20;
+    timer = setInterval(decrement, 1000);
+    $("#timeRemain").html(time);
+}
+
+//Decreases time variable and checks if it's equal to 0, calling the next question if it is.
+function decrement() {
+    time--;
+    if (time == 0) {
+        stop();
+        $("#timeRemain").html(time);
+    } else {
+        $("#timeRemain").html(time);
+    }
+}
+
+//Stops timer at 0
+function stop() {
+    clearInterval(timer);
+}
 
 var questionAnswers = [{
         question: "What is the body of water that borders Greece, Turkey and Southern Italy?",
@@ -71,8 +97,9 @@ var questionAnswers = [{
 
 function showTrivia() {
     for (var i = 0; i < questionAnswers[index].answers.length; i++) {
+        startTimer();
         $("#button").empty();
-        $("#timeRemain").html("Time Remaining:");
+        $("#timeRemain").html("Time Remaining: 20 seconds");
         $("#showQuestion").html(questionAnswers[index].question);
         $("#showPossibleAnswers").html(questionAnswers[index].answers);
         $("#image-holder").html(questionAnswers[index].animate);
@@ -80,10 +107,10 @@ function showTrivia() {
 }
 
 function nextImage() {
-    //  TODO: Increment the count by 1.
+    //increments the count by one
     index++;
     setTimeout(showTrivia, 8000);
-    // TODO: If the count is the same as the length of the image array, reset the count to 0.
+    // if the count is the same as the length of the image array, reset the count to 0.
     if (index === animate.length) {
         index = 0;
     }
@@ -94,4 +121,10 @@ function startSlideshow() {
     // TODO: Use showImage to hold the setInterval to run nextImage.
     showImage = setInterval(nextImage, 8000);
 
+}
+
+function resultsSlide() {
+    $("#correct").html("Correct Answers " + score);
+    $("#incorrect").html("Incorrect Answers " + wrong);
+    $("#unanswered").html("Unanswered Answers " + unanswered);
 }
