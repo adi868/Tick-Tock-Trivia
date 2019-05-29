@@ -8,13 +8,17 @@ var wrong = 0;
 var unanswered = 0;
 var answer = "";
 var clockRunning = false;
-var time = 15;
+var time = 10;
 var timer;
 
 
 var questionAnswers = [{
         question: "What is the body of water that borders Greece, Turkey and Southern Italy?",
-        answers: ["1. Red Sea", "2. Mediterranean Sea", "3. Aegean Sea", "4. Black Sea"],
+        answers: [
+        "Red Sea",
+        "Mediterranean Sea", 
+        "Aegean Sea", 
+        "Black Sea"],
         rightAnswer: "Aegean Sea",
         animate: "<img src='https://media.giphy.com/media/sfjfPOe8DKptm/giphy.gif 'width='500px' height='300px'/>"
     },
@@ -82,9 +86,9 @@ function showTrivia() {
         $("#showQuestion").html(questionAnswers[index].question);
         $("#showPossibleAnswers").html(questionAnswers[index].answers);
         $("#image-holder").html(questionAnswers[index].animate);
-        console.log(questionAnswers[index].answers[1]);
-        console.log(questionAnswers[index].answers[2])
-        setTimeout(generateAnswers, 18000);
+        // console.log(questionAnswers[index].answers[index]);
+        // console.log(questionAnswers[index].answers[2])
+        setTimeout(generateAnswers, 8000);
         // $("#showPossibleAnswers").attr("data-answer", num2);
         // checkAnswer();
         // $("#showPossibleAnswers").on("click", function () {
@@ -94,6 +98,7 @@ function showTrivia() {
         //       alert(questionAnswers[index].answers[1]);
     }
 }
+
 
 
 // function checkAnswer() {
@@ -113,7 +118,6 @@ function startSlideshow() {
 function nextImage() {
     //increments the count by one
     index++;
-    setTimeout(showTrivia, 1000);
     $("#showAnswer").empty();
     if (index === questionAnswers.length) {
         resultsSlide();
@@ -127,7 +131,7 @@ function generateAnswers() {
 
 //Starts countdown
 function startTimer() {
-    time = 20;
+    time = 10;
     //decrement is one seconds
     clearInterval(timer);
     timer = setInterval(decrement, 1000)
@@ -141,6 +145,7 @@ function decrement() {
     if (time === 0) {
         stop();
         nextImage();
+        showTrivia();
         $("#timeRemain").html("Time Remaining: " + time);
     } else {
         $("#timeRemain").html("Time Remaining: " + time);
@@ -168,27 +173,9 @@ function resultsSlide() {
     $("#button2").html('<br><button>Start Over?</button>')
     $("#button2").on("click", function () {
         alert("Work in Progress :)")
-        startSlideshow();
+        showTrivia();
         //insert restart game
     })
 
 };
 
-
-
-// function startSlideshow() {
-//     showTrivia()
-//     // TODO: Use showImage to hold the setInterval to run nextImage.
-//     showImage = setInterval(nextImage, 5000);
-
-// }
-
-// function nextImage() {
-//     //increments the count by one
-//     index++;
-//     setTimeout(showTrivia, 5000);
-//     // if the count is the same as the length of the answer array, do results slide
-//     if (index === questionAnswers.length) {
-//         resultsSlide();
-//     }
-// }
