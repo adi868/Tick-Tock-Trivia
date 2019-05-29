@@ -6,32 +6,8 @@ var count = 0;
 var score = 0;
 var wrong = 0;
 var unanswered = 0;
-var clockRunning = false;
-var time = 0;
-var lap = 1;
+var answer = "";
 
-//Starts countdown
-function startTimer() {
-    time = 20;
-    timer = setInterval(decrement, 1000);
-    $("#timeRemain").html(time);
-}
-
-//Decreases time variable and checks if it's equal to 0, calling the next question if it is.
-function decrement() {
-    time--;
-    if (time == 0) {
-        stop();
-        $("#timeRemain").html(time);
-    } else {
-        $("#timeRemain").html(time);
-    }
-}
-
-//Stops timer at 0
-function stop() {
-    clearInterval(timer);
-}
 
 var questionAnswers = [{
         question: "What is the body of water that borders Greece, Turkey and Southern Italy?",
@@ -99,32 +75,145 @@ function showTrivia() {
     for (var i = 0; i < questionAnswers[index].answers.length; i++) {
         startTimer();
         $("#button").empty();
-        $("#timeRemain").html("Time Remaining: 20 seconds");
+        var newDiv = $("<button>");
+        $("<button>").html(questionAnswers[index].question);
+        newDiv.attr("data-randomnumber", questionAnswers[index].answers[1])
+
+
+
+        //assign attributes
+        // catImage.attr("src", imageUrl);
+        // catImage.attr("alt", "cat image");
+
+        //put something ahead of it......html overrides it
+        // $("#images").html(catImage);
+
+
+        // var person = $(this).attr("data-person");
+        // $("#img2").on("click", function () {
+        //     $("#img2").attr("data-randomnumber", num2);
+
+
+
+
+        // $("#timeRemain").html("Time Remaining: 20 seconds");
         $("#showQuestion").html(questionAnswers[index].question);
         $("#showPossibleAnswers").html(questionAnswers[index].answers);
         $("#image-holder").html(questionAnswers[index].animate);
+        // $("showPossibleAnswers").hover(function(){
+        //     $("showPossibleAnswers").css("color", "yellow");
+        //   
+        $("#showAnswer").html("The right answer is: " + questionAnswers[index].rightAnswer)
+        console.log(questionAnswers[index].answers[1]);
+        console.log(questionAnswers[index].answers[2])
+        // $("#showPossibleAnswers").attr("data-answer", num2);
+        // checkAnswer();
+        $("#showPossibleAnswers").on("click", function () {
+            alert($("#showPossibleAnswers").index(questionAnswers[index].answers));
+
+            // alert("hey!");
+            //       alert(questionAnswers[index].answers[1]);
+        })
     }
+}
+
+
+// function checkAnswer() {
+//     $("#showPossibleAnswers").on("click"), function(event){
+//         var answer = $("#showPossibleAnswers").attr("data-answer", questionAnswers[index].answers[i]);
+//         if (answer === rightAnswer) {
+//             //       //adds one more win to counter
+//              score++;
+//              console.log(score)
+//     }
+//     }
+// }
+
+function startSlideshow() {
+    showTrivia()
+    // TODO: Use showImage to hold the setInterval to run nextImage.
+    showImage = setInterval(nextImage, 5000);
+
 }
 
 function nextImage() {
     //increments the count by one
     index++;
-    setTimeout(showTrivia, 8000);
-    // if the count is the same as the length of the image array, reset the count to 0.
-    if (index === animate.length) {
-        index = 0;
+    setTimeout(showTrivia, 5000);
+    // if the count is the same as the length of the answer array, do results slide
+    if (index === questionAnswers.length) {
+        resultsSlide();
     }
 }
 
-function startSlideshow() {
-    showTrivia()
-    // TODO: Use showImage to hold the setInterval to run nextImage.
-    showImage = setInterval(nextImage, 8000);
 
+var clockRunning = false;
+var time = 20;
+var timer; 
+
+//Starts countdown
+function startTimer() {
+    time = 20;
+    //decrement is one seconds
+    timer = setInterval(decrement, 1000)
+    clockRunning = true;
+    $("#timeRemain").html("Time Remaining: " + time);
+}
+
+//Decreases time variable and checks if it's equal to 0, calling the next question if it is.
+function decrement() {
+    time--;
+    if (time <= 0) {
+        stop();
+        $("#timeRemain").html("Time Remaining: " + time);
+    } 
+    else {
+        $("#timeRemain").html("Time Remaining: " + time);
+      }
+}
+
+//Stops timer at 0
+function stop() {
+    clearInterval(timer);
+    clockRunning = false;
 }
 
 function resultsSlide() {
-    $("#correct").html("Correct Answers " + score);
-    $("#incorrect").html("Incorrect Answers " + wrong);
-    $("#unanswered").html("Unanswered Answers " + unanswered);
-}
+    stop();
+    $("#showQuestion").empty();
+    $("#showPossibleAnswers").empty();
+    $("#image-holder").empty();
+    $("#showAnswer").empty();
+    $("#timeRemain").empty();
+    $("#image-holder").empty();
+    $("#final-screen-text").html("<u>Woo! Here's how you did!</u>")
+    $("#correct").html("<br>Correct Answers: " + score);
+    $("#incorrect").html("<br>Incorrect Answers: " + wrong);
+    $("#unanswered").html("<br>Unanswered Answers: " + unanswered);
+    $("#button2").html('<br><button>Start Over?</button>')
+    $("#button2").on("click", function () {
+        alert("Work in Progress :)")
+        startSlideshow();
+        //insert restart game
+    })
+
+};
+
+
+
+// function startSlideshow() {
+//     showTrivia()
+//     // TODO: Use showImage to hold the setInterval to run nextImage.
+//     showImage = setInterval(nextImage, 5000);
+
+// }
+
+// function nextImage() {
+//     //increments the count by one
+//     index++;
+//     setTimeout(showTrivia, 5000);
+//     // if the count is the same as the length of the answer array, do results slide
+//     if (index === questionAnswers.length) {
+//         resultsSlide();
+//     }
+// }
