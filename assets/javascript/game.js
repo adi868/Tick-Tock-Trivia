@@ -7,6 +7,9 @@ var score = 0;
 var wrong = 0;
 var unanswered = 0;
 var answer = "";
+var clockRunning = false;
+var time = 15;
+var timer;
 
 
 var questionAnswers = [{
@@ -71,49 +74,24 @@ var questionAnswers = [{
     },
 ]
 
+
 function showTrivia() {
     for (var i = 0; i < questionAnswers[index].answers.length; i++) {
         startTimer();
         $("#button").empty();
-        var newDiv = $("<button>");
-        $("<button>").html(questionAnswers[index].question);
-        newDiv.attr("data-randomnumber", questionAnswers[index].answers[1])
-
-
-
-        //assign attributes
-        // catImage.attr("src", imageUrl);
-        // catImage.attr("alt", "cat image");
-
-        //put something ahead of it......html overrides it
-        // $("#images").html(catImage);
-
-
-        // var person = $(this).attr("data-person");
-        // $("#img2").on("click", function () {
-        //     $("#img2").attr("data-randomnumber", num2);
-
-
-
-
-        // $("#timeRemain").html("Time Remaining: 20 seconds");
         $("#showQuestion").html(questionAnswers[index].question);
         $("#showPossibleAnswers").html(questionAnswers[index].answers);
         $("#image-holder").html(questionAnswers[index].animate);
-        // $("showPossibleAnswers").hover(function(){
-        //     $("showPossibleAnswers").css("color", "yellow");
-        //   
-        $("#showAnswer").html("The right answer is: " + questionAnswers[index].rightAnswer)
         console.log(questionAnswers[index].answers[1]);
         console.log(questionAnswers[index].answers[2])
+        setTimeout(generateAnswers, 18000);
         // $("#showPossibleAnswers").attr("data-answer", num2);
         // checkAnswer();
-        $("#showPossibleAnswers").on("click", function () {
-            alert($("#showPossibleAnswers").index(questionAnswers[index].answers));
+        // $("#showPossibleAnswers").on("click", function () {
+        //     alert($("#showPossibleAnswers").index(questionAnswers[index].answers));
 
-            // alert("hey!");
-            //       alert(questionAnswers[index].answers[1]);
-        })
+        // alert("hey!");
+        //       alert(questionAnswers[index].answers[1]);
     }
 }
 
@@ -128,33 +106,30 @@ function showTrivia() {
 //     }
 //     }
 // }
-
 function startSlideshow() {
     showTrivia()
-    // TODO: Use showImage to hold the setInterval to run nextImage.
-    showImage = setInterval(nextImage, 5000);
-
 }
 
 function nextImage() {
     //increments the count by one
     index++;
-    setTimeout(showTrivia, 5000);
-    // if the count is the same as the length of the answer array, do results slide
+    setTimeout(showTrivia, 1000);
+    $("#showAnswer").empty();
     if (index === questionAnswers.length) {
         resultsSlide();
     }
 }
 
+function generateAnswers() {
+    $("#showAnswer").html("<br>The right answer is: " + questionAnswers[index].rightAnswer)
+}
 
-var clockRunning = false;
-var time = 20;
-var timer; 
 
 //Starts countdown
 function startTimer() {
     time = 20;
     //decrement is one seconds
+    clearInterval(timer);
     timer = setInterval(decrement, 1000)
     clockRunning = true;
     $("#timeRemain").html("Time Remaining: " + time);
@@ -163,13 +138,13 @@ function startTimer() {
 //Decreases time variable and checks if it's equal to 0, calling the next question if it is.
 function decrement() {
     time--;
-    if (time <= 0) {
+    if (time === 0) {
         stop();
+        nextImage();
         $("#timeRemain").html("Time Remaining: " + time);
-    } 
-    else {
+    } else {
         $("#timeRemain").html("Time Remaining: " + time);
-      }
+    }
 }
 
 //Stops timer at 0
