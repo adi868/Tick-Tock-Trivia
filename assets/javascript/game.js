@@ -1,6 +1,7 @@
 $(document).ready(function () {
-
-
+    $(".choice").hide();
+    $("#image-holder").hide();
+    $(".text").hide();
     $("#start").click(startSlideshow);
 
     var index = 0;
@@ -82,6 +83,9 @@ $(document).ready(function () {
     function showTrivia() {
         for (var i = 0; i < questionAnswers[index].answers.length; i++) {
             startTimer();
+            $(".choice").show();
+            $("#image-holder").show();
+            $(".text").show();
             $("#button").empty();
             $("#showQuestion").html(questionAnswers[index].question);
             $("#image-holder").html(questionAnswers[index].animate);
@@ -100,7 +104,7 @@ $(document).ready(function () {
         $(".choice").on("click", function () {
             var answer = $(".choice").val();
             console.log(answer)
-            if (answer == questionAnswers[index].rightAnswer) {
+            if (answer === questionAnswers[index].rightAnswer) {
                 score++;
                 console.log("Score: " + score)
             } else if (answer === "") {
@@ -167,6 +171,8 @@ $(document).ready(function () {
         $("#image-holder").empty();
         $("#showAnswer").empty();
         $("#timeRemain").empty();
+        $(".text").hide();
+        $("#image-holder").hide();
         $("#image-holder").empty();
         $("#final-screen-text").html("<u>Woo! Here's how you did!</u>")
         $("#correct").html("<br>Correct Answers: " + score);
@@ -176,7 +182,6 @@ $(document).ready(function () {
         $("#button2").on("click", function () {
             alert("Work in Progress :)")
             showTrivia();
-            //insert restart game
         })
 
     };
