@@ -44,14 +44,16 @@
     letter-spacing: 1.5px;
 }
 
-#showAnswer {
-    font-weight: bold !important;
-}
 
 #image-holder {
     width: 500px;
     height: 300px;
     margin: 0 auto;
+    font-weight: bold;
+    text-align: center;
+    font-size: 19px;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1.5px;
 }
 
 img {
