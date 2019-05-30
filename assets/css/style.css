@@ -52,10 +52,6 @@ img {
     border-radius: 15px;
 }
 
-#showPossibleAnswers:hover { 
-    background-color: yellow;
-  }
-
   .finalScreen{
     font-family: 'Luckiest Guy';
     text-align: center;
@@ -64,4 +60,18 @@ img {
 
   #showAnswer{
       font-weight:bold
+  }
+
+  .choice:hover{
+    width: 200px;
+    height: 50px;
+    background-color:red;
+  }
+
+  .choice{
+    display:block;
+    width: 200px;
+    height: 50px;
+    margin: 0 auto; 
+    font-size: 20px; 
   }
