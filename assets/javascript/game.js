@@ -90,32 +90,27 @@ $(document).ready(function () {
             $("#choice3").html(questionAnswers[index].answers[2]);
             $("#choice4").html(questionAnswers[index].answers[3]);
             $(".choice").on("click", function () {
-                    generateAnswers();
-                    var answer = $(".choice").attr("data-value", answer);
-                    console.log(answer)
-                    if (answer === questionAnswers[index].rightAnswer) {
-                        score++;
-                        console.log("Score: "+ score)
-                    } else if (answer === "") {
-                        unanswered++;
-                        console.log("Unanswered: "+ unanswered)
-                    } else {
-                        wrong++;
-                        console.log("Wrong: " + wrong)
-                    }
-                });
-            }
+                generateAnswers();
+                checkAnswer();
+            });
         }
-                
+    }
+
     function checkAnswer() {
-        $(".choice").on("click"),
-            function (event) {
-                if (answer === rightAnswer) {
-                    //       //adds one more win to counter
-                    score++;
-                    console.log(score)
-                }
+        $(".choice").on("click", function () {
+            var answer = $(".choice").val();
+            console.log(answer)
+            if (answer == questionAnswers[index].rightAnswer) {
+                score++;
+                console.log("Score: " + score)
+            } else if (answer === "") {
+                unanswered++;
+                console.log("Unanswered: " + unanswered)
+            } else {
+                wrong++;
+                console.log("Wrong: " + wrong)
             }
+        });
     }
 
     function startSlideshow() {
