@@ -12,7 +12,7 @@ $(document).ready(function () {
     var clockRunning = false;
     var time = 10;
     var timer;
-
+//variables
     var setTimeoutId;
 
     var questionAnswers = [{
